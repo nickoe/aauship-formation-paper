@@ -114,10 +114,10 @@ C_{RB} &\text{ is coriolis-centriopedal matrix}\nonumber\\
 \end{align}
 where in $\tau_{RB}$
 \begin{align}
-\qquad \tau_{\text{hyd}} &\text{ is the hydrodynamic force}\nonumber\\
-\qquad \tau_{\text{hs}} &\text{ is the hydrostatic force}\nonumber\\
-\qquad \tau_{\text{wind}} &\text{ is the wind force}\nonumber\\
-\qquad \tau_{\text{wave}} &\text{ is the wave force}\nonumber
+\tau_{\text{hyd}} &\text{ is the hydrodynamic force}\nonumber\\
+\tau_{\text{hs}} &\text{ is the hydrostatic force}\nonumber\\
+\tau_{\text{wind}} &\text{ is the wind force}\nonumber\\
+\tau_{\text{wave}} &\text{ is the wave force}\nonumber
 \end{align}
 
 Combined, this gives the following full vessel model:
@@ -497,7 +497,7 @@ wanted safety radius thus rises the need to recheck the potential
 field again after have generated a new combined agent. If the radius
 of the new agent places it close to one of the single agents, these
 also might need to cluster. Thus the algorithm needs to run until no
-distances between agents are $< 2 \cdot r$.
+distances between agents are less than two times the radius.
 
 The algorithm generating this combined agent can be seen in pseudo
 code in algorithm \ref{al:clusteragents}.
@@ -579,9 +579,12 @@ leader, or one leader in the formation.
 
 The implementation of this is tested in matlab, using the m-files;
 
-potfield.m, pathgen.m, shipcontroller.m, simaauship.m, simaauship2.m.
+{\footnotesize
+\texttt{potfield.m}, \texttt{pathgen.m}, \texttt{shipcontroller.m},\\
+\texttt{simaauship.m}, \texttt{simaauship2.m}.
+}
 
-The potfield.m is the potential field algorithm, where the magnitudes
+The \texttt{potfield.m} is the potential field algorithm, where the magnitudes
 of the field is generated. The pathgen.m is the trajectory generation,
 which takes in a set of waypoints and generates the line segments that
 the vessels needs to follow. The controller applied at the AAUSHIP is
@@ -589,7 +592,7 @@ a heading controller, which is handled in the shipcontroller.m. To
 simulate the AAUSHIP is two files used; simaauship.m and
 simaauship2.m. The first is used to simulate the individual vessel and
 verify the dynamics of a single ship, and the latter is for simulating
-the formation with the potfield.m and pathgen.m applied.
+the formation with the \texttt{potfield.m} and \texttt{pathgen.m} applied.
 
 The simulation algorithm for the multiship potential field should keep
 in mind that it is necessary to save the time series for the ship's
