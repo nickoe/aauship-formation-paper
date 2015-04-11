@@ -1,0 +1,752 @@
+%\documentclass[a4paper,12pt]{IEEEtran}
+\documentclass[conference]{IEEEtran}
+%\input{preamble}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc} % So we can input Nicks name in the paper title!
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}%,amsfonts,amssymb} % Added so we can do pretty math equations.
+\usepackage{geometry}
+\usepackage{lipsum}
+\usepackage[pdftex,bookmarks=true,bookmarksnumbered=true]{hyperref}
+\usepackage[english,final]{varioref} % Vi kan anvende \vref
+\usepackage[draft]{fixme}
+\usepackage[boxed,linesnumbered]{algorithm2e}
+\usepackage{glossaries}
+\setacronymstyle{long-sc-short}
+\geometry{left=3cm,right=3cm,bottom=4cm}
+\newcommand{\colwidth}{3in}
+\begin{document}
+
+\newacronym{FRP}{FRP}{Formation Reference Point}
+\newacronym{GNC}{GNC}{Guidance, Navigation and Control}
+\newacronym{LOS}{LOS}{Line-Of-Sight}
+\title{\vspace{-2cm}Formation Control of AAUSHIP}
+\author{Nick Østergaard \and Jeppe Dam \and Jesper A. Larsen}
+\maketitle
+
+%\begin{center}
+%\vspace{-0.7cm}
+%Group 12gr730
+%\end{center}
+%\thispagestyle{empty}
+
+\section{Introduction}
+The background for the formation control subject of this project
+originate in a collaboration with Port of Aalborg, who has a vision to
+make their harbour an intelligent harbour. This will, among other
+things, include autonomous piloting of cargo ships bringing cargo to and from
+Aalborg. For the cargo ships to enter the harbour it is important that
+the seabed is deep enough and the sand has not build up larger bars or
+moved the channel unexpectedly.  Currently bathymetry surveys are
+performed manually with a small manned survey boat equipped with a
+multi beam sonar, scanning some area of interest, which is a smaller
+fraction of the whole Limfjord.
+
+This is done with a period between three months up to three years,
+depending on how active the seabed is. If the level is too shallow,
+such that the cargo ships cannot enter, it is the Port of Aalborg that
+needs to clear the area and ensure safe travel for their customers.
+
+The work within this project is carried out to assist the Port of
+Aalborg with their survey task. The development and implementation of
+the AAUSHIP project will fit very well into this environment and be of
+good aid for the Port of Aalborg.
+
+The first focus point of the project is to model and test the
+prototype of the AAUSHIP and then extend the fleet with duplicates of
+the first AAUSHIP. The ship needs to follow a trajectory and thereby
+sail within a predetermined location of interest. The second focus
+point is to implement formation control of a fleet of AAUSHIP's and
+test this at the location of interest. An area of the harbour has been
+given as a use case to test the results against.
+
+\section{Method}
+The AAUSHIP is modelled by a 5 degree of freedom (DOF) model, which differs
+from a 3 DOF model by including the pitch and roll also.
+These are taken into account due to the fact that the AAUSHIP runs
+with single beam sonars and therefore it is important to know the
+relative pitch and roll angles. 
+
+\subsection{Simulation Model}
+\label{ch:simulation-model}
+In order to simulate the ships behaviour in water, an accurate
+simulation model has been developed and verified agains the real ship.
+The hydro-dynamic model used to simulate the ships is given as:
+\begin{align}
+M_A \dot \nu_r + C_A(\nu_r)\nu_r + D(\nu_r)\nu_r + g(\eta_r) = \tau
+\label{eq:hydmodel}
+\end{align}
+%\nomenclature{$M_A$}{The added mass matrix}
+where
+\begin{align}
+&M_A \text{ is the added mass matrix from the system}\nonumber\\
+&C_A \text{ is the added mass matrix due to the Coriolis force}\nonumber\\
+&D(\nu) \text{ is a combination of the potential and viscous damping matrices}\nonumber\\
+&g(\eta) \text{ is the restoring forces, which is dependent on the position of the vessel}\nonumber\\
+&\tau \text{ is control and propulsion forces}\nonumber\\
+&\nu \text{ is the velocities of the vessel in all directions and moments}
+\end{align}
+
+The rigid body is used to model the physics of the vessel, as it is
+assumed that the vessel is sufficiently stiff to neglect bending
+dynamics. Translational motion and rotational motion can be derived by
+analysis of this, and by ~\citep{sname1950} and ~\citep[sec.
+(3.3.1)]{fossen} written in component form as:
+\begin{align}
+f^b_b &= [X,Y,Z]^T & &- \text{force through } o_b \text{ expressed in } \{b\}\\
+m^b_b &= [K,M,N]^T & &- \text{moment about } o_b \text{ expressed in } \{b\}\\
+v^b_{b/n} &= [u,v,w]^T & &- \text{linear velocity of } o_b \text{ relative } o_n \text{ expressed in } \{b\}\\
+\omega^b_{b/n} &= [p,q,r]^T & &- \text{angular velocity of } {b} \text{ relative to } \{n\} \text{ expressed in } \{b\}\\
+r^b_g &= [x_g,y_g,z_g]^T & &- \text{vector from } o_b \text{ to CG expressed in } \{b\}
+\end{align}
+
+The rigid body forces are written as:
+\begin{align}
+M_{RB} \dot \nu_r + C_{RB}(\nu_r)\nu_r = \tau_{RB}
+\label{eq:rigidmodel}
+\end{align}
+where
+\begin{align}
+M_{RB} &\text{ is the system inertia matrix}\nonumber\\
+C_{RB} &\text{ is coriolis-centriopedal matrix}\nonumber\\
+\tau_{RB} &\text{ is a lumped force combined of } \tau_{\text{hyd}} + \tau_{\text{hs}} + \tau_{\text{wind}} + \tau_{\text{wave}}\nonumber
+\end{align}
+where in $\tau_{RB}$
+\begin{align}
+\qquad \tau_{\text{hyd}} &\text{ is the hydrodynamic force}\nonumber\\
+\qquad \tau_{\text{hs}} &\text{ is the hydrostatic force}\nonumber\\
+\qquad \tau_{\text{wind}} &\text{ is the wind force}\nonumber\\
+\qquad \tau_{\text{wave}} &\text{ is the wave force}\nonumber
+\end{align}
+
+Combined, this gives the following full vessel model:
+\begin{align}
+&\underbrace{M_{RB} \dot \nu_r + C_{RB}(\nu_r)\nu_r}_{\text{rigid-body forces}}\\\nonumber
+&+ \underbrace{M_A \dot \nu_r + C_A(\nu_r)\nu_r + D(\nu_r)\nu_r + g(\eta_r)}_{\text{hydrodynamic forces}}  = \tau + \tau_{RB}
+\label{eq:totmodel}
+\end{align}
+Since the vessel within this project is of smaller scale, the $C_A$ and $C_{RB}$ from \ref{eq:hydmodel} and \ref{eq:rigidmodel} are neglected ~\citep[eq. (2.23)]{fullactuatship}.
+
+\section{Control model}
+\fixme{include something about the linearized model here}
+
+
+\section{Formation control}
+\label{sc:one-approach}
+In the following approach a potential field is generated for each
+agent including obstacles, formation span, desired, and actual
+position.  It will be a combination of virtual leader and potential
+field. The principle generates a potential field to keep the formation
+and that field is moved around as a virtual leader. When the virtual
+leader is moved around it results in a deflection of the desired
+position and causes the affected agents to get back into position. The
+positions of the agents in the field is given individually to the
+specific agents relative to the virtual leader. The approach generates
+a single resulting vector for each agent which is used to guide the
+agent. The potential field for each agent is generated from four
+components:
+\begin{align}
+\tilde{\mathbf{F}}_i^{tot} = \mathbf{F}_{vl}+\mathbf{F}_{ij}^{tot}+\mathbf{F}_{ca}^{tot}+\mathbf{F}_{oa}^{tot}
+\end{align}
+where:
+\begin{itemize}
+%\firmlist%
+\item[$\mathbf{F}_{vl}$] virtual leader force
+\item[$\mathbf{F}_{ij}^{tot}$] inter-agent forces
+\item[$\mathbf{F}_{ca}^{tot}$] agent-agent collision avoidance forces
+\item[$\mathbf{F}_{oa}^{tot}$] agent-obstacle collision avoidance forces
+\end{itemize}
+
+\subsubsection{Virtual Leader, $\mathbf{F}_{vl}$}
+The virtual leader is an anchor of each formation, the \gls{FRP}, and
+controls the movement of this. This movement can be given as a
+full trajectory of as a set of way points. The local virtual leader's
+contribution to the field is defined as:
+\begin{align}
+\mathbf{F}_{vl} &= K_{vl}(p_{vl}^n-p_i^n-[p_{vl}^n-p_{i0}^n])\\
+&= K_{vl}(\mathbf{d}_i-\mathbf{d}_{i0})
+\end{align}
+$K_{vl}$ is a tuning parameter. $p_{vl}$ is position of the virtual
+leader, $p_i$ is position of agent $i$, $p_{i0}$ is desired position
+of agent $i$ and the $d$ is a shorter notation for the distances in
+between. The virtual leader component guides the agents directly to
+their desired positions relative to the virtual leader.
+
+\subsubsection{Inter Vehicle Influence, $\mathbf{F}_{ij}$}
+This is the contribution of other vehicles to the potential field,
+which is expressed as:
+\begin{align}
+\mathbf{F}_{ij} &= K_{ij}(p_{j}^n-p_i^n-[p_{j0}^n-p_{i0}^n])\\
+&= K_{ij}(\mathbf{d}_{ij}-\mathbf{d}_{ij0})
+\end{align}
+Similar to previously the $p$s are positions, $K_{ij}$ is a tuning
+parameter and $d$ is a shorter notation for the distances in between.
+This component preserves the formation by affecting the agents to keep
+their respective desired distances among themselves. The weighting on
+each goal can be adjusted by $K_{vl}$ and $K_{ij}$, hence this
+weighting is a weighting that causes the agents to either follow the
+virtual leader or to preserve their desired formation.  In a swarm of
+$N$ agents the total field for agent $i$ given by:
+\begin{align}
+\mathbf{F}_{ij}^{tot} = \sum\limits_{j=1}^N\mathbf{F}_{ij}(i,j) \text{ for } j\neq i
+\end{align}
+
+\subsubsection{Collision Avoidance, $\mathbf{F}_{ca}$}
+The collision avoidance takes effect when the agents get closer than a
+pre defined distance of each other. It generates an additional field
+component for the vehicle $i$ which points away from the entering
+agent causing the agents to move away from each other. To ensure the
+avoidance the component converges towards infinity in the centre of
+the $i$'th agent. The $\mathbf{F}_{ca}$ is expressed as:
+\begin{align}
+    \mathbf{F}_{ca}^{ij}= 
+\begin{cases}
+		\left(
+    \frac{K_{ca}r}{||\mathbf{d}_{ij}||}-K_{ca}
+		\right)
+		\frac{\mathbf{d}_{ij}}{||\mathbf{d}_{ij}||}
+		,& \text{for } ||\mathbf{d}_{ij}||<r\\
+    0,              & \text{otherwise}
+\end{cases}
+\end{align}
+where $K_{ca}$ is a tuning parameter. $r$ is the safety radius for
+collision and $\mathbf{d}_{ij}$ is the distance between the individual agents.
+The collision avoidance can be expressed in a total term of the
+collision avoidance:
+\begin{align}
+\mathbf{F}_{ca}^{tot} = \sum\limits_{j=1}^N\mathbf{F}_{ca}^{ij} \text{ for } i\neq j
+\end{align}
+
+\subsubsection{Obstacle Avoidance, $\mathbf{F}_{oa}$}
+The same principle as for collision avoidance can be applied to
+obstacle avoidance. Now each obstacle needs to be handled as an agent,
+which will make the same result, but the reference is a little
+different:
+\begin{align}
+    \mathbf{F}_{oa}^{ik}= 
+\begin{cases}
+    \left( \frac{K_{oa}}{||\mathbf{d}_{ki}||}-\frac{K_{oa}}{r}\right)
+		\frac{\mathbf{d}_{{ki}}}{||\mathbf{d}_{ki}||},& \text{for } ||\mathbf{d}_{ki}||<r\\
+    0,              & \text{otherwise}
+\end{cases}
+\end{align}
+where $k$ denotes the counter for obstacles instead of other agents.
+$K_{oa}$ is also a tuning parameter for the obstacle avoidance.
+$\mathbf{d}_{ki}$ is the vector between an agent and the obstacle, which in a
+total term is summed up as:
+\begin{align}
+\mathbf{F}_{oa}^{tot} = \sum\limits_{k=1}^M\mathbf{F}_{oa}^{ik} \text{ for } i\neq k
+\end{align}
+Here $d_{ki}$ represents one of the $M$ place vectors which has the
+effect of a detected obstacle.
+
+It can be noticed that there is a difference between $\mathbf{F}_{ca}$
+and $\mathbf{F}_{oa}$. The two forces applies the same directions of
+forces, making the agents repulse from another agent or an obstacle.
+Though there is made a difference between them. It can be seen that
+the safety radius is moved from a multiplication to a division from
+the $\mathbf{F}_{ca}$ to the $\mathbf{F}_{oa}$. This will, dependent
+on the choices of $K_{ca}$ and $K_{oa}$, allow agents to move further
+into the safety radius of an obstacle than into the radius of another
+agent. This is due to the fact that the repulsing forces from agents
+needs to be larger in the case that two agents moves toward each
+other. In this case the agents need to react with higher aggression to
+ensure that they will repulse enough to not collide. This will not be
+the case for obstacles since these are defined with a constant
+position. The 2-D representation of $Fca$ and $Foa$ in their safety
+radius can be seen on figure \ref{fig:fcafoa}.
+
+\begin{figure}[htbp]
+  \includegraphics[width=\colwidth]{fig/fcafoa}
+  \caption{The magnitude of the forces $Fca$ and $Foa$. This force applies when an agent or an obstacle enters within the safety radius.}
+  \label{fig:fcafoa}
+\end{figure}
+
+It can be seen that the force of $Fca$ are greater than the force of
+$Foa$, although their gains $Kca$ and $Koa$ have been chosen equally.
+This is due to the difference of their structure and ensures that no
+agents collide even though they are on a collision course.
+
+The distance $r$ can be determined
+dynamically depending on the velocity of the agent:
+\begin{align}
+r = r^{min} + K_r||\dot{\mathbf{p}^n}||
+\end{align}
+Still will ensure that the agents have the possibility to decelerate
+from their absolute velocity in the safety radius such that they can
+turn away from each other.
+
+
+\subsubsection{Potential field}
+The forces are summed together to get $\tilde{\mathbf{F}}_i^{tot}$,
+which is an intermediate vector which gives the magnitude and
+direction of the potential field for vehicle $i$ at its current
+position.
+\begin{align}
+  \mathbf{F}_i^{tot} = \min\{\,\,\,||\tilde{\mathbf{F}}_i^{tot}||\,\,\,,\,\,F_{max}\,\,\,\}\frac{\tilde{\mathbf{F}}_i^{tot}}{||\tilde{\mathbf{F}}_i^{tot}||}
+\end{align}
+The $\tilde{\mathbf{F}}_i^{tot}$ denotes that it is a middle variable
+and not the final value of the potential calculation, thus not the one
+used by the controller yet.  As the potential field does not need to
+expand to infinity it is reasonable to define a maximum amplitude for
+the vector, while still keeping its direction, $F_{max}$. This will be
+a limitation of the agents' speed. As a start in the simulation phase
+is $F_{max}$ chosen as a constant, but in the fully implemented system
+it can be of benefit to adjust this maximum speed dynamically, for
+instance as in equation \ref{eq:dynfmax}, as an example from
+\citep{UAVff3dpf}.
+\begin{align}
+F_{max} = F_{min} + K_{vl}||\dot{p}^n||
+\label{eq:dynfmax}
+\end{align}
+where the $F_{min}$ is a minimum value for the upper limit and then
+with an applied gain of the speed.  The reference trajectory is used
+by the controller to calculate the agent's control input which can be
+based on the desired movement in the NED frame as:
+\begin{align}
+  \mathbf{p}_{i,r}^n = \mathbf{p}_i^n + \mathbf{F}_i ^\text{tot}
+\end{align}
+where their positions are added together with the potential field,
+such that the position and the potential field becomes linked.
+
+\section{The Potential Field Strategy}
+The theory of potential fields are implemented with the strategy
+proposed in section \ref{sc:potential-fields}. The potential field is
+generated for each individual agent at every update step to make the
+formation move and converge to a specified formation and position. The
+field is generated based on forces acting in an overlying potential
+field structure where one force converges the agent to a desired
+position, a force attracting the agent to obtain the desired formation
+along the trajectory, a force repelling the agent from other agents if
+their distance is too small and finally a force repelling the agents
+from static objects. The latter two can seem the same, but the
+repelling force will be larger for the agent-agent force due to the
+fact that two agents could have course directly toward each other and
+a more aggressive avoidance can be needed.
+
+To be able to generate and simulate the potential field the
+implementation needs to be generic. First it was developed with one
+agent that needs to converge to a desired position and afterwards were
+other agents added as obstacles and some static objects were added in
+extend. From these obstacles it can be seen that a single agent is
+able to converge to a position which makes it possible to expand such
+that more agents can converge into formation with reference from
+either a virtual leader or from each other. This will solve the
+formation coordination task, where the following task will be the
+group coordination task. The group coordination task has the goal to
+move the formation around, which here will be done by making the
+virtual leader, or an actual leader of the formation, follow a
+specified trajectory. This will make the other agents follow this
+leader and keep their formation on the trajectory.
+
+\begin{figure}[htbp]
+  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf1}
+	\caption{Plot of one agent's trajectory with a desired position with
+		obstacles to avoid}
+  \label{fig:potfieldagenti}
+\end{figure}
+
+A plot for a total potential reference field for a single agent can be
+seen on figure \ref{fig:potfieldagenti}. The red line made of crosses
+is the trajectory that one single agent will follow, if the obstacles
+to avoid in the plot are static. In the plot every object, either
+another agent or an object, are kept static. So it shows how the
+trajectory will be in one single time step. This will change in the
+next time step if the other agents also move in the potential field.
+The agent avoids obstacles on the way, where it can be seen that it
+does not get into the safety radius of the obstacles. In this specific
+plot is a safety radius ($r$) of $20$m chosen, such that the distance
+from agent $p_i$ (red trajectory) to any obstacle always will be
+larger than $20$m.
+
+%The gains $K_{ca}$ and $K_{oa}$ are chosen equally to a constant as
+%240. If this gain is chosen smaller it will result in that the agents
+%are more allowed to approach the obstacles and get a little within the
+%radius, but then afterwards getting repelled from the object. It
+%corresponds to the gradient at the radius and how steep this is.
+
+The same algorithm is applied where agent $i$ avoids other agents,
+agent $j$, $j+1$. This can be seen on figure \ref{fig:avoidagent}.
+
+\begin{figure}[htbp]
+  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf}
+	\caption{Agent $i$ avoids agent $j$ and converges to the minima at
+		the virtual leader}
+  \label{fig:avoidagent}
+\end{figure}
+
+Agent $i$ takes a direct course toward the virtual leader but meets
+another agent as an obstacle. Agent $i$ moves on the boarder of agent
+$j$ with the defined safety radius and afterwards diverges from agent
+$j$ towards the virtual leader. This is all done by following the
+lowest gradient at all times.
+
+The gain of $K_{ij}$ is not to be interpret from figure
+\ref{fig:potfieldagenti}. $K_{ij}$ is the gain to the force that
+attracts the agents together by minimizing the distance in between
+them. By doing this the agents will get faster into the desired
+formation. The gain $K_{vl}$ does at some point the opposite. This
+gain adjusts the weighting of how fixated the agents should be to
+converge to the desired position. If this gain is relatively larger
+than $K_{ij}$ then the agents will converge directly to their position
+around the virtual leader and not converge to the desired formation on
+the way. This implies that the scaling between $K_{vl}$ and $K_{ij}$
+controls if the formation should converge to the desired formation on
+the way to the desired position, or if agent $i$ should only have the
+desired position in focus.
+
+\subsection{Numerical Solution}
+\label{subsec:numsol}
+The grid in which the potential field is generated are limited with a
+certain resolution while simulating the agents movement. This reduces
+the directions of where the agents can move, which will not arise a
+problem on the same level when implemented in reality. In the
+simulation environment it reduces the resolution such that a single
+field in the grid contains one value of magnitude of the potential
+field, which makes the basis of a certain gradient to the field. The
+agents are following the implementation of the steepest decent. This
+generates a gradient towards the steepest decent, which the agent
+tracks. The analogy can be seen as a bowl, or sphere in this case,
+where a ball will converge towards the lowest point in the direction
+of the minimum gradient.
+
+The method of applying the grid with magnitude of the potential field
+rises a problem with resolution, and therefore also a problem that
+makes the 'corners' of the grid around the agent to have the steepest
+decent. This is seen as if the agent is placed in the middle of a
+3-by-3 matrix, and have eight placements around it. The placements
+around the agent will then be checked. The magnitude of the vector
+from the agent and outgoing will therefore be biggest in the corners
+since the distance to those are greater than the distances to the
+sides, up and down. This problem has been expanded with a solution
+such that a certain radius in the potential field around an agent will
+be checked. The value at the radius around the agent can be checked,
+and due to the newly equal distance to every point, these will be
+weighted equally with respect to their value. This makes in principle
+the possibility to make the agent go in all directions which will be
+closer to the reality. When testing the two methods against each other
+it is clear that the first proposed with the grid structure did not
+have the same mobility thus not preferable in simulations though it is
+simpler. The first made the agents move only in the diagonals of their
+local placement, where the latter makes the agents able to move in a
+number of directions specified in the algorithm.
+
+\subsection{Local Minima Problem}
+A problem that can become crucial arises when two agents or two
+objects are within the radius of each other. This will result in a
+local minima in the potential field between those objects. This will
+create a local minima in between these agents or objects. If an
+agent converges toward this minima they cannot get out again. The
+problem can be seen on figure \ref{fig:roevproblem}. The gains here
+are chosen exactly the same as in figure \ref{fig:potfieldagenti}.
+
+\begin{figure}[htbp]
+  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf3}
+	\caption{An agent gets stuck due to a local minima between two other
+	agents. The agent cannot get out of this minima unless the other two
+	agents makes the space for the agent to pass through}
+  \label{fig:roevproblem}
+\end{figure}
+
+The scenario on figure \ref{fig:roevproblem} has the following steps.
+The agent $i$ moves in the direction of the steepest decent. Then it
+gets to the border of another agent where it cannot go through thus
+starts to go around this agent. The problem arises when agent $i$
+reaches another agent on the way where it now has reached a local
+minima. Now the steepest gradient will point at the position where the
+agent already is thus making it think it has reached the end point.
+Solutions to this problem can be formulated in different ways.
+
+One solution could be to cluster the two objects together and instead
+of making their potential field individually, then combine those
+together and make an ellipsoid or even a circle formed obstacle of
+those objects. This will ensure that the local minima disappears thus
+not making an agent get stuck between those objects.
+
+Another solution is to make an exception handler that can tell if
+agent $i$ has reached the desired position. If it has not reached its
+end point, and the position is constant on the same placement, it
+perturbs the desired position of the agent until the direction of the
+steepest decent changes more than a predefined value. This will mean
+that the agent is out of the local minima and can continue on the
+trajectory.  The solution of clustering the objects, that are too
+close, can be seen on figure \ref{fig:solroevproblem}.
+
+\begin{figure}[htbp]
+  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf4}
+	\caption{An agent that before was stuck now does not get into a
+		local minima close to the agents, as it now sees the two other
+		agents as one larger agent.}
+  \label{fig:solroevproblem}
+\end{figure}
+
+Here the first solution is applied where the two agents, that were too
+close to each other, have been clustered into one, seen from the
+$i$'th agent. Now the local minima between the agents have been
+neglected and the $i$'th agent can generate its trajectory around the
+agents and continue to the endpoint of the potential field. The
+algorithm checks if the distances between the agents are lower that $2
+\cdot r$. If this is the case it means that the $i$'th agent cannot
+generate a trajectory in between these agents, which can lead to a
+local minima. Therefore is the agents that are too close combined into
+one by generating the middle point between their positions and
+generating a new radius. This makes a larger circle where the two
+agents are in the subset. This circle will be larger depending on the
+wanted safety radius thus rises the need to recheck the potential
+field again after have generated a new combined agent. If the radius
+of the new agent places it close to one of the single agents, these
+also might need to cluster. Thus the algorithm needs to run until no
+distances between agents are $< 2 \cdot r$.
+
+The algorithm generating this combined agent can be seen in pseudo
+code in algorithm \ref{al:clusteragents}.
+\begin{algorithm}[h]
+  \KwData{clustering of agents}
+  initialization\;
+  \If{$||\mathbf{p}_i , \mathbf{p}_j|| < 2 \cdot r$}{
+  $\mathbf{p}_{j,new} \gets \text{mid point between}\ \mathbf{p}_i\ \text{and}\ \mathbf{p}_j$\\
+  $r_{new} \gets \text{calc new r for}\ \mathbf{p}_{j,new}$\\
+  delete $\mathbf{p}_i\ \text{and}\ \mathbf{p}_j \text{with}\ \mathbf{p}_{j,new}$
+  }
+	\caption{This pseudo code describes how agents that are too close to
+		each other are getting clustered and seen as one. The algorithm
+		can also be applied for obstacles in the potential
+		field.\vspace{3mm}}
+  \label{al:clusteragents}
+\end{algorithm}
+
+Firstly every distance between the agents are checked if it is lower
+than $2 \cdot r$. If the distance is lower, a new coordinate set needs
+to be calculated. The coordinates for the $\mathbf{p}_{j,new}$ is
+generated to the middle value of the two points
+\begin{align}
+\mathbf{p}_{j,new} = \frac{\mathbf{p}_i + \mathbf{p}_j}{2}
+\end{align}
+and afterwards can the new radius for $\mathbf{p}_{j,new}$ be found from
+\begin{align}
+r_{new} = \frac{||\mathbf{p}_i , \mathbf{p}_j||}{2} + r
+\end{align}
+The $r_{new}$ is visualized on figure \ref{fig:rnew}
+\begin{figure}[htbp]
+\centering
+%\includesvg{rnew}
+\caption{Illustration of two agents close to each other clustering
+into one new agent. The two original agents, $i$ and $j$ are coloured
+in black and the new clustered object are coloured in green. The
+distance between $i$ and $j$ is coloured in red.}
+\label{fig:rnew}
+\end{figure}
+This shows the relation between the normal safety radius and the new
+radius defined for the new clustered agent.
+
+\subsection{Summary}
+In the end this results in that the every agent needs a magnitude and
+a direction of which they should move. This will be given depending on
+the total environment where the agents are manoeuvring, and will be
+assigned by the gradient vector. When applying this formation strategy
+a collision free movement is guaranteed which is one of the more
+critical criteria to be fulfilled. 
+
+
+\section{Results}
+The potential field control system consists of multiple elements
+as seen with the flow which is illustrated on the block diagram on
+figure~\vref{fig:potentialfield_block}.
+\begin{figure}[htbp]
+\centering
+%\includesvg[width=\colwidth]{potentialfield_block}
+\caption{Block diagram showing the iteration process of using the
+potential fields for computation of the input vector}
+\label{fig:potentialfield_block}
+\end{figure}
+The first block is the potential field generator. This is the
+potential field calculation to compute the magnitude of the global
+potential field. This information is passed to a trajectory generator,
+which generates the reference trajectory. This reference trajectory is
+where the $i$'th agent needs to move. This is passed to the controller
+of the vessel, which then computes the input to the actuators on the
+vessels. The position of the vessels are then fed back, both to the
+potential field calculation, the trajectory generation and the
+controller. The potential field needs to be calculated from the
+vessels relative position, the trajectory generation needs the
+position for the intermediate reference position and the controller
+will need it for i.e. error calculations.
+
+Part of this flow can be computed by the $i$'th ship themselves, but
+the overlying trajectory generation needs to be handled by the virtual
+leader, or one leader in the formation.
+
+The implementation of this is tested in matlab, using the m-files;
+
+potfield.m, pathgen.m, shipcontroller.m, simaauship.m, simaauship2.m.
+
+The potfield.m is the potential field algorithm, where the magnitudes
+of the field is generated. The pathgen.m is the trajectory generation,
+which takes in a set of waypoints and generates the line segments that
+the vessels needs to follow. The controller applied at the AAUSHIP is
+a heading controller, which is handled in the shipcontroller.m. To
+simulate the AAUSHIP is two files used; simaauship.m and
+simaauship2.m. The first is used to simulate the individual vessel and
+verify the dynamics of a single ship, and the latter is for simulating
+the formation with the potfield.m and pathgen.m applied.
+
+The simulation algorithm for the multiship potential field should keep
+in mind that it is necessary to save the time series for the ship's
+states, the control inputs and the local reference trajectory for the
+$i$'th ship. This needs to be done since the ships need to calculate
+individual trajectories dependent on the overlying trajectory, which
+only the virtual leader follows.
+
+Ignoring the initialization of all the variables, the outer loop
+guidance navigation and control algorithm using potential fields are
+as follows.
+
+The \gls{GNC} works by an array of mission specific waypoints given,
+usually computed from a desired area used to create a lawnmower
+pattern described in chapter~\vref{ch:pathgen}. This trajectory
+becomes the area of interest, and is the one overlying trajectory that
+the virtual leader has to follow. The other ships will need to
+maintain their individual positions at all time steps respective to
+the virtual leader. Dependent of how the position is formed, the ships
+needs to go into formation before or during the trajectory tracking
+phase.
+
+\paragraph{Waypoint Database}
+Different methods can be used to steer ships after this
+path. The simplest is the usual heading autopilot, which will
+just steer the reading of the ship to the course angle to the
+waypoint. Or more elaborate, ways is the use of the waypoints as
+line segments that the ship should follow. This is implemented with a
+\gls{LOS} algorithm. This algorithm, can work, but it is too simple to
+include obstacle or inter vehicle collisions. A way proposed to solve
+this issue is to use the concept of potential fields.
+
+\paragraph{Potential Field}
+The potential field itself is merely some functions describing the
+repulsive and repelling forces between points of interest in the map.
+These points of interest are all objects that matters for the
+navigation, that is all ships, the anchor point (virtual leader) of
+the formation, and other point obstacles. This using the methodology
+described in the paper \citep{UAVff3dpf}.
+
+The potential field is used in an iterative algorithm which can
+calculate the direction (from the $i$'th boat to the desired position
+spanned by a potential field defining the formation.
+
+\paragraph{Trajectory Generation}
+In the end, a reference path is calculated by the means of the
+previous position and the result from the potential field
+solver. It is calculated as the paper presents, \citep[eq.
+48]{UAVff3dpf} and described in section~\vref{sc:one-approach}.
+
+\begin{align}
+	\mathbf{p}_{i,r}^n = \mathbf{p}_i^n + \mathbf{F}_i ^\text{tot}
+\end{align}
+
+This is passed to the ships inner control loop.
+
+When the trajectory is generated from a series of way points, which is
+not ordered as a series of equidistant way points, it means that some
+handling of when or how to update the position of the virtual leader
+is needed.
+
+For example; in the case, where the way points are far from each
+other, it is still desired to make the virtual leader trajectory
+converge to the line between these two way points, kind of like the
+\gls{LOS} guidance. Earlier a path following algorithm using a \gls{LOS}
+principle was used, to calculate a course angle to a point projected
+into the line between two way points with a specified lookahead
+distance. The projection with the lookahead ensures convergence to the
+line. But in the case of controlling the virtual leader, it is not
+necessary to calculate the course angle from the virtual leader to the
+projected point, because this is only a virtual anchor of the
+formation, hence this only specifies where the geometry of the
+formation is calculated from. 
+
+For the inner loop, a heading based \gls{LOS} method can still be used,
+but this should be calculated for every ship, with each their
+reference position $\mathbf{p}_{i,r}$.
+
+\begin{algorithm}[h]
+	\KwData{track as global mission trajectory as way points}
+	initialization\;
+	\While{$m <=$ length of track}{
+		\For{every $i$-th boat}{
+			\If{formation is ok}{
+				\If{$\mathbf{p}_{vl}$ is inside the way point acceptance radius of the
+				track}{
+					$m \gets m + 1$\; 
+					$\mathbf{p}_{vl} \gets$ \textsl{LOS}$(\ p_{vl}\ ,\ $track($m$)\ )\;
+				}
+			}
+			$(\ \mathbf{p}_{d,i}\ ,\ \mathbf{F}_{\text{tot},i}\ ) \gets $  \textsl{pathgen}(\ $p_i$\ ,\ $p0_i$\ )\;
+			$\mathbf{p}_{r,i} \gets \mathbf{p}_i + \mathbf{F}_{\text{tot},i}$\;
+			$\psi_{d,i} \gets $ heading from $\mathbf{p}_i$ to $\mathbf{p}_d$\;
+			$u_i \gets $ \textsl{controller}(\ $\psi_d$\ )\;
+			\textsl{send input $u$ to ship}\;
+			$\mathbf{x}_i \gets $ \textsl{sense ship states}\;
+			$\mathbf{p}_i \gets $ position of $\mathbf{x}_i$\; 
+		}
+	}
+	\caption{This pseudo code describes how the potential field is used
+	for each boat to calculate the reference for the inner controller
+	for every boat at every time step. Every iteration in the while loop
+	is a time step.\vspace{6pt}}
+	\label{al:potfield}
+\end{algorithm}
+
+The algorithm~\vref{al:potfield} describes how the potential field
+strategy can be simulated, were each iteration of the while loop is a
+time step, which means that the control will continue until the
+formation has reached the way point acceptance radius of the track.
+This is to ensure that the formation anchor do not move forward if the
+ships are not properly in formation. This is analogous with the group
+coordination task as defined by \citep{thorvaldsen}, and described in
+section~\ref{sc:initialisation}.
+
+A simulation of the algorithm with the dynamics of the AAUSHIP can be seen on figure \ref{fig:potform}.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\colwidth]{fig/lawn-bar-formation}
+  \caption{Four agents are placed relative to the middle point of the formation, the virtual leader. This leader moves at the trajectory with the waypoints, but only changes to the next waypoint if the agents are in formation.}
+  \label{fig:potform}
+\end{figure}
+The red crosses are waypoints that have been targeted as the next waypoint to reach. The line connecting those waypoints are the virtual leader movement, which changes position from waypoint to waypoint to generate the straight line segments for the formation to follow. Every of the four agents have a relative position placement to the virtual leader, the agents positions are $p_{ij}$ and given as $p^n_{vl} + \text{offset}$ and the position of the virtual leader is given as $p^n_{vl}$. The ships are shown as yellow ships and the ships in formation is connected with a red line.
+
+The formation have started at position $[-250,-150]$ and has the first waypoint in $[-208,-120]$. When the agents are close to reach the waypoint at $[-208,-120]$, they ensure that every agent are in formation by waiting for the last to catch up, if needed. Then all of them are in formation with respect to the virtual leader and this changes waypoint such that the agents needs to go toward the next waypoint. This waypoint shifting continues until no more waypoints are available.
+
+It can be seen that there is a little divergence of the ships to the line segments which is mainly due to the dynamics of the AAUSHIP. Their respective line segments are not shown on the figure, while this would make the figure confusing. Though the agents will follow a line segment from their position in the formation to the new position in the formation. This is due to the movement of the virtual leader where this only moves in straight lines, thus the following agents pursue to do the same. The trajectory the ships follow is plotted beneath the third vessel from the left from where it can be seen that this vessel is placed on top of the virtual leader, and almost makes this vessel serve as the leader of the formation. Due to the formation setup the following ships will follow the same trajectory as the leader but only in this case shifted in the easting position.
+
+\section{Discussion}
+
+The model and simulation has proved to work when implemented on the AAUSHIP which results in a vessel that tracks a predetermined trajectory. This makes the basis for the further work of expanding the fleet of AAUSHIPS and implement the investigated control strategies and ending up with a successful digital mapping of the seabed in the Limfjord.
+
+%For now the first aim is reached with a model of the AAUSHIP that can
+%track the given trajectory, implementation of the whole ship is close
+%to done, it just needs testing. Moving on the focus is to determine
+%the control paradigms within formation control that fits with our
+%use case and implement this on AAUSHIP and the rest of the fleet.
+
+%As the complete
+%conclusion should the tests be performed in the same location of
+%interest as the data have been taken by the Port of Aalborg. The
+%conclusion should by that time be that the fleet can do it as good as
+%the manual scanning performed by The Port of Aalborg.
+
+\bibliographystyle{apalike} 
+\bibliography{bib}
+\end{document}
+
+%Here's a suggestion as to what an extended abstract should contain:
+%
+%    Background - A little history about who's done what and how your work fits in with it.
+%    Aim - What you're trying to tell the audience that they don't already know (e.g. Your story.)
+%    Method - Why the audience should believe that the results you've got aren't made up or flawed
+%    Results - Evidence that you've come up with that confirms your story
+%    Conclusion - Recap of your story and its implications
+%    Limitations - Why someone might doubt your story and what you've done to get rid of as much doubt as possible.
+%
+%What if I'm presenting a review of my progress to date and I have no original research?
+%Method = literature survey.
+%Results = what you've read.
