@@ -1,0 +1,33 @@
+\begin{thebibliography}{}
+
+\bibitem[Fossen, 2011]{fossen}
+Fossen, T.~I. (2011).
+\newblock {\em Handbook of Marine Craft Hydrodynamics and Motion Control}.
+\newblock Wiley.
+
+\bibitem[Paul et~al., 2008]{UAVff3dpf}
+Paul, T., Krogstad, T., and Gravdahl, J. (2008).
+\newblock {UAV} formation flight using {3D} potential field.
+\newblock In {\em 16th Mediterranean Conference on Control and Automation},
+  pages 1240--1245.
+
+\bibitem[SNAME, 1950]{sname1950}
+SNAME (1950).
+\newblock {Nomenclature for Treating the Motion of a Submerged Body Through a
+  Fluid. Technical and Research Bulletin No. 1-5}.
+\newblock Technical report, The Society of Naval Architects and Marine
+  Engineers.
+
+\bibitem[Thorvaldsen, 2011]{thorvaldsen}
+Thorvaldsen, C. (2011).
+\newblock Formation control of marine vessels.
+\newblock Master's thesis, Norwegian University of Science and Technology.
+
+\bibitem[Wondergem, 2005]{fullactuatship}
+Wondergem, M. (July, 2005).
+\newblock Output feedback tracking of a fully actuated ship.
+\newblock Master's thesis, Technische Universiteit Eindhoven.
+\newblock [Online; accessed 3-June-2014]. DCT 2005.104.
+  {http://alexandria.tue.nl/repository/books/598447.pdf}.
+
+\end{thebibliography}

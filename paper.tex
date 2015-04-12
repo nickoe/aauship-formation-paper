@@ -12,15 +12,15 @@
 \usepackage[english,final]{varioref} % Vi kan anvende \vref
 \usepackage[draft]{fixme}
 \usepackage[boxed,linesnumbered]{algorithm2e}
-\usepackage{glossaries}
-\setacronymstyle{long-sc-short}
+%\usepackage{glossaries}
+%\setacronymstyle{long-sc-short}
 \geometry{left=3cm,right=3cm,bottom=4cm}
 \newcommand{\colwidth}{3in}
 \begin{document}
 
-\newacronym{FRP}{FRP}{Formation Reference Point}
-\newacronym{GNC}{GNC}{Guidance, Navigation and Control}
-\newacronym{LOS}{LOS}{Line-Of-Sight}
+%\newacronym{FRP}{FRP}{Formation Reference Point}
+%\newacronym{GNC}{GNC}{Guidance, Navigation and Control}
+%\newacronym{LOS}{LOS}{Line-Of-Sight}
 \title{\vspace{-2cm}Formation Control of AAUSHIP}
 \author{Nick Østergaard \and Jeppe Dam \and Jesper A. Larsen}
 \maketitle
@@ -30,6 +30,10 @@
 %Group 12gr730
 %\end{center}
 %\thispagestyle{empty}
+
+\begin{abstract}
+Many maritime mapping tasks are today carried out by large research ships, which are very costly to operate. As a way to overcome this, a number of small surveying vessels have been developed called AAUSHIP. In order to efficiently map the an area with such smaller vessels, it is important that several vessels are able to corporate on the task at hand. In this paper, the developed formation control strategy for the AAUSHIP series of vessels is presented, along with simulation results, which confirms, that the algorithm works as intended.
+\end{abstract}
 
 \section{Introduction}
 The background for the formation control subject of this project
@@ -79,46 +83,24 @@ M_A \dot \nu_r + C_A(\nu_r)\nu_r + D(\nu_r)\nu_r + g(\eta_r) = \tau
 \end{align}
 %\nomenclature{$M_A$}{The added mass matrix}
 where
-\begin{align}
-&M_A \text{ is the added mass matrix from the system}\nonumber\\
-&C_A \text{ is the added mass matrix due to the Coriolis force}\nonumber\\
-&D(\nu) \text{ is a combination of the potential and viscous damping matrices}\nonumber\\
-&g(\eta) \text{ is the restoring forces, which is dependent on the position of the vessel}\nonumber\\
-&\tau \text{ is control and propulsion forces}\nonumber\\
-&\nu \text{ is the velocities of the vessel in all directions and moments}
-\end{align}
+$M_A$ is the added mass matrix from the system, $C_A$ is the added mass matrix due to the Coriolis force, $D(\nu)$ is a combination of the potential and viscous damping matrices, $g(\eta)$ is the restoring forces, which is dependent on the position of the vessel, $\tau$ is control and propulsion forces and $\nu$ is the velocities of the vessel in all directions and moments.
 
 The rigid body is used to model the physics of the vessel, as it is
 assumed that the vessel is sufficiently stiff to neglect bending
 dynamics. Translational motion and rotational motion can be derived by
 analysis of this, and by ~\citep{sname1950} and ~\citep[sec.
 (3.3.1)]{fossen} written in component form as:
-\begin{align}
-f^b_b &= [X,Y,Z]^T & &- \text{force through } o_b \text{ expressed in } \{b\}\\
-m^b_b &= [K,M,N]^T & &- \text{moment about } o_b \text{ expressed in } \{b\}\\
-v^b_{b/n} &= [u,v,w]^T & &- \text{linear velocity of } o_b \text{ relative } o_n \text{ expressed in } \{b\}\\
-\omega^b_{b/n} &= [p,q,r]^T & &- \text{angular velocity of } {b} \text{ relative to } \{n\} \text{ expressed in } \{b\}\\
-r^b_g &= [x_g,y_g,z_g]^T & &- \text{vector from } o_b \text{ to CG expressed in } \{b\}
-\end{align}
+$f^b_b = [X,Y,Z]^T$ and $m^b_b = [K,M,N]^T$, force through $o_b$ and moments about $o_b$ expressed in $\{b\}$,
+$v^b_{b/n} = [u,v,w]^T$ is the linear velocity of $o_b$ relative $o_n$ expressed in $\{b\}$,
+$\omega^b_{b/n} = [p,q,r]^T$ is the angular velocity of ${b}$ relative to $\{n\}$ expressed in  $\{b\}$ and 
+$r^b_g = [x_g,y_g,z_g]^T$ is the vector from $o_b$ to CG expressed in $\{b\}$
 
 The rigid body forces are written as:
 \begin{align}
 M_{RB} \dot \nu_r + C_{RB}(\nu_r)\nu_r = \tau_{RB}
 \label{eq:rigidmodel}
 \end{align}
-where
-\begin{align}
-M_{RB} &\text{ is the system inertia matrix}\nonumber\\
-C_{RB} &\text{ is coriolis-centriopedal matrix}\nonumber\\
-\tau_{RB} &\text{ is a lumped force combined of } \tau_{\text{hyd}} + \tau_{\text{hs}} + \tau_{\text{wind}} + \tau_{\text{wave}}\nonumber
-\end{align}
-where in $\tau_{RB}$
-\begin{align}
-\tau_{\text{hyd}} &\text{ is the hydrodynamic force}\nonumber\\
-\tau_{\text{hs}} &\text{ is the hydrostatic force}\nonumber\\
-\tau_{\text{wind}} &\text{ is the wind force}\nonumber\\
-\tau_{\text{wave}} &\text{ is the wave force}\nonumber
-\end{align}
+where $M_{RB}$ is the system inertia matrix, $C_{RB}$ is the coriolis-centriopedal matrix, $\tau_{RB}$ is a lumped force combined of $\tau_{\text{hyd}}$ + $\tau_{\text{hs}}$+ $\tau_{\text{wind}}$ + $\tau_{\text{wave}}$.
 
 Combined, this gives the following full vessel model:
 \begin{align}
@@ -128,8 +110,8 @@ Combined, this gives the following full vessel model:
 \end{align}
 Since the vessel within this project is of smaller scale, the $C_A$ and $C_{RB}$ from \ref{eq:hydmodel} and \ref{eq:rigidmodel} are neglected ~\citep[eq. (2.23)]{fullactuatship}.
 
-\section{Control model}
-\fixme{include something about the linearized model here}
+%\section{Control model}
+%\fixme{include something about the linearized model here}
 
 
 \section{Formation control}
@@ -159,7 +141,7 @@ where:
 \end{itemize}
 
 \subsubsection{Virtual Leader, $\mathbf{F}_{vl}$}
-The virtual leader is an anchor of each formation, the \gls{FRP}, and
+The virtual leader is an anchor of each formation, the Formation Reference Point (FRP), and
 controls the movement of this. This movement can be given as a
 full trajectory of as a set of way points. The local virtual leader's
 contribution to the field is defined as:
@@ -243,30 +225,31 @@ effect of a detected obstacle.
 
 It can be noticed that there is a difference between $\mathbf{F}_{ca}$
 and $\mathbf{F}_{oa}$. The two forces applies the same directions of
-forces, making the agents repulse from another agent or an obstacle.
-Though there is made a difference between them. It can be seen that
-the safety radius is moved from a multiplication to a division from
-the $\mathbf{F}_{ca}$ to the $\mathbf{F}_{oa}$. This will, dependent
-on the choices of $K_{ca}$ and $K_{oa}$, allow agents to move further
-into the safety radius of an obstacle than into the radius of another
-agent. This is due to the fact that the repulsing forces from agents
-needs to be larger in the case that two agents moves toward each
-other. In this case the agents need to react with higher aggression to
-ensure that they will repulse enough to not collide. This will not be
-the case for obstacles since these are defined with a constant
-position. The 2-D representation of $Fca$ and $Foa$ in their safety
-radius can be seen on figure \ref{fig:fcafoa}.
+forces, making the agents repulse from another agent or an obstacle, but for equal parameters the $\mathbf{F}_{ca}$ generates a larger force, meaning that collision is punished harder than obstacles. 
 
-\begin{figure}[htbp]
-  \includegraphics[width=\colwidth]{fig/fcafoa}
-  \caption{The magnitude of the forces $Fca$ and $Foa$. This force applies when an agent or an obstacle enters within the safety radius.}
-  \label{fig:fcafoa}
-\end{figure}
 
-It can be seen that the force of $Fca$ are greater than the force of
-$Foa$, although their gains $Kca$ and $Koa$ have been chosen equally.
-This is due to the difference of their structure and ensures that no
-agents collide even though they are on a collision course.
+%Though there is made a difference between them. It can be seen that
+%the safety radius is moved from a multiplication to a division from
+%the $\mathbf{F}_{ca}$ to the $\mathbf{F}_{oa}$. This will, dependent
+%on the choices of $K_{ca}$ and $K_{oa}$, allow agents to move further
+%into the safety radius of an obstacle than into the radius of another
+%agent. This is due to the fact that the repulsing forces from agents
+%needs to be larger in the case that two agents moves toward each
+%other. In this case the agents need to react with higher aggression to
+%ensure that they will repulse enough to not collide. This will not be
+%the case for obstacles since these are defined with a constant
+%position. The 2-D representation of $Fca$ and $Foa$ in their safety
+%radius can be seen on figure \ref{fig:fcafoa}.
+%\begin{figure}[htbp]
+%  \includegraphics[width=\colwidth]{fig/fcafoa}
+%  \caption{The magnitude of the forces $Fca$ and $Foa$. This force applies when an agent or an obstacle enters within the safety radius.}
+%  \label{fig:fcafoa}
+%\end{figure}
+
+%It can be seen that the force of $Fca$ are greater than the force of
+%$Foa$, although their gains $Kca$ and $Koa$ have been chosen equally.
+%This is due to the difference of their structure and ensures that no
+%agents collide even though they are on a collision course.
 
 The distance $r$ can be determined
 dynamically depending on the velocity of the agent:
@@ -311,8 +294,7 @@ where their positions are added together with the potential field,
 such that the position and the potential field becomes linked.
 
 \section{The Potential Field Strategy}
-The theory of potential fields are implemented with the strategy
-proposed in section \ref{sc:potential-fields}. The potential field is
+ The potential field is
 generated for each individual agent at every update step to make the
 formation move and converge to a specified formation and position. The
 field is generated based on forces acting in an overlying potential
@@ -516,31 +498,18 @@ code in algorithm \ref{al:clusteragents}.
   \label{al:clusteragents}
 \end{algorithm}
 
-Firstly every distance between the agents are checked if it is lower
+The algorithm works by first checking every distance between the agents to see if it is lower
 than $2 \cdot r$. If the distance is lower, a new coordinate set needs
 to be calculated. The coordinates for the $\mathbf{p}_{j,new}$ is
 generated to the middle value of the two points
 \begin{align}
 \mathbf{p}_{j,new} = \frac{\mathbf{p}_i + \mathbf{p}_j}{2}
 \end{align}
-and afterwards can the new radius for $\mathbf{p}_{j,new}$ be found from
+and afterwards the new radius for $\mathbf{p}_{j,new}$ can be found from
 \begin{align}
 r_{new} = \frac{||\mathbf{p}_i , \mathbf{p}_j||}{2} + r
 \end{align}
-The $r_{new}$ is visualized on figure \ref{fig:rnew}
-\begin{figure}[htbp]
-\centering
-%\includesvg{rnew}
-\caption{Illustration of two agents close to each other clustering
-into one new agent. The two original agents, $i$ and $j$ are coloured
-in black and the new clustered object are coloured in green. The
-distance between $i$ and $j$ is coloured in red.}
-\label{fig:rnew}
-\end{figure}
-This shows the relation between the normal safety radius and the new
-radius defined for the new clustered agent.
 
-\subsection{Summary}
 In the end this results in that the every agent needs a magnitude and
 a direction of which they should move. This will be given depending on
 the total environment where the agents are manoeuvring, and will be
@@ -555,7 +524,7 @@ as seen with the flow which is illustrated on the block diagram on
 figure~\vref{fig:potentialfield_block}.
 \begin{figure}[htbp]
 \centering
-%\includesvg[width=\colwidth]{potentialfield_block}
+\includegraphics[width=\colwidth]{fig/potentialfield_block}
 \caption{Block diagram showing the iteration process of using the
 potential fields for computation of the input vector}
 \label{fig:potentialfield_block}
@@ -566,7 +535,7 @@ potential field. This information is passed to a trajectory generator,
 which generates the reference trajectory. This reference trajectory is
 where the $i$'th agent needs to move. This is passed to the controller
 of the vessel, which then computes the input to the actuators on the
-vessels. The position of the vessels are then fed back, both to the
+vessels, which in this case is done via a linear controller, which has been developed based on a linearized version of the vessel around its nominal operating point. The position of the vessels are then fed back, both to the
 potential field calculation, the trajectory generation and the
 controller. The potential field needs to be calculated from the
 vessels relative position, the trajectory generation needs the
@@ -577,37 +546,9 @@ Part of this flow can be computed by the $i$'th ship themselves, but
 the overlying trajectory generation needs to be handled by the virtual
 leader, or one leader in the formation.
 
-The implementation of this is tested in matlab, using the m-files;
-
-{\footnotesize
-\texttt{potfield.m}, \texttt{pathgen.m}, \texttt{shipcontroller.m},\\
-\texttt{simaauship.m}, \texttt{simaauship2.m}.
-}
-
-The \texttt{potfield.m} is the potential field algorithm, where the magnitudes
-of the field is generated. The pathgen.m is the trajectory generation,
-which takes in a set of waypoints and generates the line segments that
-the vessels needs to follow. The controller applied at the AAUSHIP is
-a heading controller, which is handled in the shipcontroller.m. To
-simulate the AAUSHIP is two files used; simaauship.m and
-simaauship2.m. The first is used to simulate the individual vessel and
-verify the dynamics of a single ship, and the latter is for simulating
-the formation with the \texttt{potfield.m} and \texttt{pathgen.m} applied.
-
-The simulation algorithm for the multiship potential field should keep
-in mind that it is necessary to save the time series for the ship's
-states, the control inputs and the local reference trajectory for the
-$i$'th ship. This needs to be done since the ships need to calculate
-individual trajectories dependent on the overlying trajectory, which
-only the virtual leader follows.
-
-Ignoring the initialization of all the variables, the outer loop
-guidance navigation and control algorithm using potential fields are
-as follows.
-
-The \gls{GNC} works by an array of mission specific waypoints given,
+The Guidance Navigation and Control (GNC) works by an array of mission specific waypoints given,
 usually computed from a desired area used to create a lawnmower
-pattern described in chapter~\vref{ch:pathgen}. This trajectory
+pattern or similar area coverage algorihm. This trajectory
 becomes the area of interest, and is the one overlying trajectory that
 the virtual leader has to follow. The other ships will need to
 maintain their individual positions at all time steps respective to
@@ -615,59 +556,59 @@ the virtual leader. Dependent of how the position is formed, the ships
 needs to go into formation before or during the trajectory tracking
 phase.
 
-\paragraph{Waypoint Database}
-Different methods can be used to steer ships after this
-path. The simplest is the usual heading autopilot, which will
-just steer the reading of the ship to the course angle to the
-waypoint. Or more elaborate, ways is the use of the waypoints as
-line segments that the ship should follow. This is implemented with a
-\gls{LOS} algorithm. This algorithm, can work, but it is too simple to
-include obstacle or inter vehicle collisions. A way proposed to solve
-this issue is to use the concept of potential fields.
+%\paragraph{Waypoint Database}
+%Different methods can be used to steer ships after this
+%path. The simplest is the usual heading autopilot, which will
+%just steer the reading of the ship to the course angle to the
+%waypoint. Or more elaborate, ways is the use of the waypoints as
+%line segments that the ship should follow. This is implemented with a
+%Line of Sight (LOS) algorithm. This algorithm, can work, but it is too simple to
+%include obstacle or inter vehicle collisions. A way proposed to solve
+%this issue is to use the concept of potential fields.%
+%
+%\paragraph{Potential Field}
+%The potential field itself is merely some functions describing the
+%repulsive and repelling forces between points of interest in the map.
+%These points of interest are all objects that matters for the
+%navigation, that is all ships, the anchor point (virtual leader) of
+%the formation, and other point obstacles. This using the methodology
+%described in the paper \citep{UAVff3dpf}.%
 
-\paragraph{Potential Field}
-The potential field itself is merely some functions describing the
-repulsive and repelling forces between points of interest in the map.
-These points of interest are all objects that matters for the
-navigation, that is all ships, the anchor point (virtual leader) of
-the formation, and other point obstacles. This using the methodology
-described in the paper \citep{UAVff3dpf}.
+%The potential field is used in an iterative algorithm which can
+%calculate the direction (from the $i$'th boat to the desired position
+%spanned by a potential field defining the formation.
 
-The potential field is used in an iterative algorithm which can
-calculate the direction (from the $i$'th boat to the desired position
-spanned by a potential field defining the formation.
+%\paragraph{Trajectory Generation}
+%In the end, a reference path is calculated by the means of the
+%previous position and the result from the potential field
+%solver. It is calculated as the paper presents, \citep[eq.
+%48]{UAVff3dpf} and described in section~\vref{sc:one-approach}.
 
-\paragraph{Trajectory Generation}
-In the end, a reference path is calculated by the means of the
-previous position and the result from the potential field
-solver. It is calculated as the paper presents, \citep[eq.
-48]{UAVff3dpf} and described in section~\vref{sc:one-approach}.
+%\begin{align}
+%	\mathbf{p}_{i,r}^n = \mathbf{p}_i^n + \mathbf{F}_i ^\text{tot}
+%\end{align}
 
-\begin{align}
-	\mathbf{p}_{i,r}^n = \mathbf{p}_i^n + \mathbf{F}_i ^\text{tot}
-\end{align}
+%This is passed to the ships inner control loop.
 
-This is passed to the ships inner control loop.
+%When the trajectory is generated from a series of way points, which is
+%not ordered as a series of equidistant way points, it means that some
+%handling of when or how to update the position of the virtual leader
+%is needed.
 
-When the trajectory is generated from a series of way points, which is
-not ordered as a series of equidistant way points, it means that some
-handling of when or how to update the position of the virtual leader
-is needed.
+%For example; in the case, where the way points are far from each
+%other, it is still desired to make the virtual leader trajectory
+%converge to the line between these two way points, kind of like the
+%LOS guidance. Earlier a path following algorithm using a LOS
+%principle was used, to calculate a course angle to a point projected
+%%into the line between two way points with a specified lookahead%
+%distance. The projection with the lookahead ensures convergence to the
+%line. But in the case of controlling the virtual leader, it is not
+%necessary to calculate the course angle from the virtual leader to the
+%projected point, because this is only a virtual anchor of the
+%formation, hence this only specifies where the geometry of the
+%formation is calculated from. 
 
-For example; in the case, where the way points are far from each
-other, it is still desired to make the virtual leader trajectory
-converge to the line between these two way points, kind of like the
-\gls{LOS} guidance. Earlier a path following algorithm using a \gls{LOS}
-principle was used, to calculate a course angle to a point projected
-into the line between two way points with a specified lookahead
-distance. The projection with the lookahead ensures convergence to the
-line. But in the case of controlling the virtual leader, it is not
-necessary to calculate the course angle from the virtual leader to the
-projected point, because this is only a virtual anchor of the
-formation, hence this only specifies where the geometry of the
-formation is calculated from. 
-
-For the inner loop, a heading based \gls{LOS} method can still be used,
+For the inner loop, a heading based LOS method can still be used,
 but this should be calculated for every ship, with each their
 reference position $\mathbf{p}_{i,r}$.
 
@@ -705,8 +646,7 @@ time step, which means that the control will continue until the
 formation has reached the way point acceptance radius of the track.
 This is to ensure that the formation anchor do not move forward if the
 ships are not properly in formation. This is analogous with the group
-coordination task as defined by \citep{thorvaldsen}, and described in
-section~\ref{sc:initialisation}.
+coordination task as defined by \citep{thorvaldsen}.
 
 A simulation of the algorithm with the dynamics of the AAUSHIP can be seen on figure \ref{fig:potform}.
 \begin{figure}[htbp]

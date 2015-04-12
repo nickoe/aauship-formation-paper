@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{section.1}{I Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{II Method}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{II-A Simulation Model}{section.2}% 3
+\BOOKMARK [1][-]{section.3}{III Formation control}{}% 4
+\BOOKMARK [2][-]{subsubsection.3.0.1}{III-1 Virtual Leader, Fvl}{section.3}% 5
+\BOOKMARK [3][-]{subsubsection.3.0.2}{III-2 Inter Vehicle Influence, Fij}{subsubsection.3.0.1}% 6
+\BOOKMARK [3][-]{subsubsection.3.0.3}{III-3 Collision Avoidance, Fca}{subsubsection.3.0.1}% 7
+\BOOKMARK [3][-]{subsubsection.3.0.4}{III-4 Obstacle Avoidance, Foa}{subsubsection.3.0.1}% 8
+\BOOKMARK [3][-]{subsubsection.3.0.5}{III-5 Potential field}{subsubsection.3.0.1}% 9
+\BOOKMARK [1][-]{section.4}{IV The Potential Field Strategy}{}% 10
+\BOOKMARK [2][-]{subsection.4.1}{IV-A Numerical Solution}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.2}{IV-B Local Minima Problem}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{V Results}{}% 13
+\BOOKMARK [1][-]{section.6}{VI Discussion}{}% 14
