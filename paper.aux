@@ -18,13 +18,13 @@
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{sname1950}
 \citation{fossen}
-\citation{fullactuatship}
 \@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Method}{1}{section.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-A}}Simulation Model}{1}{subsection.2.1}}
 \newlabel{ch:simulation-model}{{\unhbox \voidb@x \hbox {II-A}}{1}{Simulation Model}{subsection.2.1}{}}
 \newlabel{eq:hydmodel}{{1}{1}{Simulation Model}{equation.2.1}{}}
 \newlabel{eq:rigidmodel}{{2}{1}{Simulation Model}{equation.2.2}{}}
+\citation{fullactuatship}
 \@writefile{toc}{\contentsline {section}{\numberline {III}Formation control}{2}{section.3}}
 \newlabel{sc:one-approach}{{III}{2}{Formation control}{section.3}{}}
 \newlabel{eq:totmodel}{{4}{2}{Formation control}{equation.3.4}{}}
@@ -47,14 +47,16 @@
 \newlabel{fig:roevproblem}{{3}{5}{An agent gets stuck due to a local minima between two other agents. The agent cannot get out of this minima unless the other two agents makes the space for the agent to pass through}{figure.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces An agent that before was stuck now does not get into a local minima close to the agents, as it now sees the two other agents as one larger agent.}}{5}{figure.4}}
 \newlabel{fig:solroevproblem}{{4}{5}{An agent that before was stuck now does not get into a local minima close to the agents, as it now sees the two other agents as one larger agent}{figure.4}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces This pseudo code describes how agents that are too close to each other are getting clustered and seen as one. The algorithm can also be applied for obstacles in the potential field.}}{5}{algocf.1}}
+\newlabel{al:clusteragents}{{1}{5}{Local Minima Problem}{algocf.1}{}}
 \citation{thorvaldsen}
-\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces This pseudo code describes how agents that are too close to each other are getting clustered and seen as one. The algorithm can also be applied for obstacles in the potential field.}}{6}{algocf.1}}
-\newlabel{al:clusteragents}{{1}{6}{Local Minima Problem}{algocf.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {V}Results}{6}{section.5}}
 \newlabel{1@xvr}{{}{6}{Results}{section.5}{}}
 \newlabel{1@vr}{{}{6}{Results}{section.5}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Block diagram showing the iteration process of using the potential fields for computation of the input vector}}{6}{figure.5}}
 \newlabel{fig:potentialfield_block}{{5}{6}{Block diagram showing the iteration process of using the potential fields for computation of the input vector}{figure.5}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces This pseudo code describes how the potential field is used for each boat to calculate the reference for the inner controller for every boat at every time step. Every iteration in the while loop is a time step.}}{6}{algocf.2}}
+\newlabel{al:potfield}{{2}{6}{Results}{algocf.2}{}}
 \newlabel{2@xvr}{{}{6}{Results}{algocf.2}{}}
 \newlabel{2@vr}{{}{6}{Results}{algocf.2}{}}
 \bibstyle{apalike}
@@ -64,8 +66,6 @@
 \bibcite{sname1950}{{3}{1950}{{SNAME}}{{}}}
 \bibcite{thorvaldsen}{{4}{2011}{{Thorvaldsen}}{{}}}
 \bibcite{fullactuatship}{{5}{2005}{{Wondergem}}{{}}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces This pseudo code describes how the potential field is used for each boat to calculate the reference for the inner controller for every boat at every time step. Every iteration in the while loop is a time step.}}{7}{algocf.2}}
-\newlabel{al:potfield}{{2}{7}{Results}{algocf.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Four agents are placed relative to the middle point of the formation, the virtual leader. This leader moves at the trajectory with the waypoints, but only changes to the next waypoint if the agents are in formation.}}{7}{figure.6}}
-\newlabel{fig:potform}{{6}{7}{Four agents are placed relative to the middle point of the formation, the virtual leader. This leader moves at the trajectory with the waypoints, but only changes to the next waypoint if the agents are in formation}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Four agents are placed relative to the middle point of the formation, the virtual leader. This leader moves at the trajectory with the waypoints, but only changes to the next waypoint if the agents are in formation. The blue circles with the red plus signs are the waypoints of the virtual leader. The other paths are computed from this and the FRP.}}{7}{figure.6}}
+\newlabel{fig:potform}{{6}{7}{Four agents are placed relative to the middle point of the formation, the virtual leader. This leader moves at the trajectory with the waypoints, but only changes to the next waypoint if the agents are in formation. The blue circles with the red plus signs are the waypoints of the virtual leader. The other paths are computed from this and the FRP}{figure.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion}{7}{section.6}}

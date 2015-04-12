@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.2.27)  13 APR 2015 00:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.2.27)  13 APR 2015 00:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -23,7 +23,7 @@ LaTeX Font Info:    Try loading font information for OT1+ptm on input line 373.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
--- Using 8.5in x 11in (letter) paper.
+-- Using 210mm x 297mm (a4) paper.
 -- Using PDF output.
 \@IEEEnormalsizeunitybaselineskip=\dimen104
 -- This is a 10 point document.
@@ -736,19 +736,19 @@ e
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
 * driver: pdftex
-* paper: <default>
+* paper: a4paper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(85.35826pt, 443.57848pt, 85.35826pt)
-* v-part:(T,H,B)=(95.39737pt, 585.7616pt, 113.81102pt)
-* \paperwidth=614.295pt
-* \paperheight=794.96999pt
-* \textwidth=443.57848pt
-* \textheight=585.7616pt
+* h-part:(L,W,R)=(85.35826pt, 426.79135pt, 85.35826pt)
+* v-part:(T,H,B)=(101.40665pt, 629.82918pt, 113.81102pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=426.79135pt
+* \textheight=629.82918pt
 * \oddsidemargin=13.08827pt
 * \evensidemargin=13.08827pt
-* \topmargin=-6.94011pt
+* \topmargin=-0.93083pt
 * \headheight=12.0pt
 * \headsep=18.06749pt
 * \topskip=11.0pt
@@ -787,7 +787,7 @@ LaTeX Info: Redefining \nameref on input line 19.
 
 LaTeX Info: Redefining \Ref on input line 19.
 
-Overfull \hbox (7.60196pt too wide) in paragraph at lines 110--110
+Overfull \hbox (15.99551pt too wide) in paragraph at lines 115--115
 [] 
  []
 
@@ -797,146 +797,131 @@ Overfull \hbox (7.60196pt too wide) in paragraph at lines 110--110
 ]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 144.
+(hyperref)                than one, level fixed on input line 149.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 144.
+(hyperref)                removing `math shift' on input line 149.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 144.
+(hyperref)                removing `subscript' on input line 149.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 144.
+(hyperref)                removing `math shift' on input line 149.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 159.
+(hyperref)                removing `math shift' on input line 164.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 159.
+(hyperref)                removing `subscript' on input line 164.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 159.
+(hyperref)                removing `math shift' on input line 164.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 178.
+(hyperref)                removing `math shift' on input line 183.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 178.
+(hyperref)                removing `subscript' on input line 183.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 178.
-
-
-Underfull \hbox (badness 4886) in paragraph at lines 178--184
- []\T1/ptm/m/it/10 Collision Avoid-ance, $\OT1/cmr/bx/n/10 F[]$\T1/ptm/m/it/10 
-: [][][] \T1/ptm/m/n/10 The col-li-sion
- []
+(hyperref)                removing `math shift' on input line 183.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 204.
+(hyperref)                removing `math shift' on input line 209.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 204.
+(hyperref)                removing `subscript' on input line 209.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 204.
+(hyperref)                removing `math shift' on input line 209.
 
-[2] <fig/ftotmagnfigpdf1.pdf, id=110, 386.58426pt x 317.7973pt>
+[2] <fig/ftotmagnfigpdf1.pdf, id=109, 386.58426pt x 317.7973pt>
 File: fig/ftotmagnfigpdf1.pdf Graphic file (type pdf)
 
 <use fig/ftotmagnfigpdf1.pdf>
-Package pdftex.def Info: fig/ftotmagnfigpdf1.pdf used on input line 326.
-(pdftex.def)             Requested size: 191.509pt x 157.43379pt.
+Package pdftex.def Info: fig/ftotmagnfigpdf1.pdf used on input line 331.
+(pdftex.def)             Requested size: 183.95485pt x 151.22198pt.
  [3 <./fig/ftotmagnfigpdf1.pdf>]
 <fig/ftotmagnfigpdf.pdf, id=153, 386.58426pt x 317.7973pt>
 File: fig/ftotmagnfigpdf.pdf Graphic file (type pdf)
 
 <use fig/ftotmagnfigpdf.pdf>
-Package pdftex.def Info: fig/ftotmagnfigpdf.pdf used on input line 355.
-(pdftex.def)             Requested size: 191.509pt x 157.43379pt.
- [4 <./fig/ftotmagnfigpdf.pdf>]
-<fig/ftotmagnfigpdf3.pdf, id=194, 386.58426pt x 317.7973pt>
+Package pdftex.def Info: fig/ftotmagnfigpdf.pdf used on input line 360.
+(pdftex.def)             Requested size: 183.95485pt x 151.22198pt.
+
+<fig/ftotmagnfigpdf3.pdf, id=157, 386.58426pt x 317.7973pt>
 File: fig/ftotmagnfigpdf3.pdf Graphic file (type pdf)
 
 <use fig/ftotmagnfigpdf3.pdf>
-Package pdftex.def Info: fig/ftotmagnfigpdf3.pdf used on input line 427.
-(pdftex.def)             Requested size: 191.509pt x 157.43379pt.
-
-<fig/ftotmagnfigpdf4.pdf, id=197, 386.01595pt x 319.55386pt>
+Package pdftex.def Info: fig/ftotmagnfigpdf3.pdf used on input line 432.
+(pdftex.def)             Requested size: 183.95485pt x 151.22198pt.
+ [4 <./fig/ftotmagnfigpdf.pdf>]
+<fig/ftotmagnfigpdf4.pdf, id=198, 386.01595pt x 319.55386pt>
 File: fig/ftotmagnfigpdf4.pdf Graphic file (type pdf)
 
 <use fig/ftotmagnfigpdf4.pdf>
-Package pdftex.def Info: fig/ftotmagnfigpdf4.pdf used on input line 459.
-(pdftex.def)             Requested size: 191.509pt x 158.53802pt.
+Package pdftex.def Info: fig/ftotmagnfigpdf4.pdf used on input line 464.
+(pdftex.def)             Requested size: 183.95485pt x 152.287pt.
 
+Underfull \vbox (badness 6047) has occurred while \output is active []
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5 <./fig/ftotmagnfigpdf3.pdf> <./fig/ftotmagnfigpdf4.pdf
+ [5 <./fig/ftotmagnfigpdf3.pdf> <./fig/ftotmagnfigpdf4.pdf
 
 pdfTeX warning: pdflatex (file ./fig/ftotmagnfigpdf4.pdf): PDF inclusion: multi
 ple pdfs with page group included in a single page
->] <fig/potentialfield_block.png, id=253, 1138.2525pt x 123.46124pt>
+>] <fig/potentialfield_block.png, id=258, 1138.2525pt x 123.46124pt>
 File: fig/potentialfield_block.png Graphic file (type png)
 
 <use fig/potentialfield_block.png>
-Package pdftex.def Info: fig/potentialfield_block.png used on input line 527.
+Package pdftex.def Info: fig/potentialfield_block.png used on input line 532.
 (pdftex.def)             Requested size: 216.81pt x 23.51627pt.
 
-Overfull \hbox (4.02077pt too wide) in paragraph at lines 527--529
+Overfull \hbox (12.41432pt too wide) in paragraph at lines 532--534
  [][] 
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<fig/lawn-bar-formation.pdf, id=258, 463.79956pt x 346.03105pt>
+<fig/lawn-bar-formation.pdf, id=263, 463.79956pt x 346.03105pt>
 File: fig/lawn-bar-formation.pdf Graphic file (type pdf)
 
 <use fig/lawn-bar-formation.pdf>
-Package pdftex.def Info: fig/lawn-bar-formation.pdf used on input line 654.
+Package pdftex.def Info: fig/lawn-bar-formation.pdf used on input line 659.
 (pdftex.def)             Requested size: 216.81pt x 161.75285pt.
 
-Overfull \hbox (4.02077pt too wide) in paragraph at lines 654--655
+Overfull \hbox (12.41432pt too wide) in paragraph at lines 659--665
  [][] 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 660--661
+[6 <./fig/potentialfield_block.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 670--671
 []\T1/ptm/m/n/10 The for-ma-tion have started at po-si-tion
  []
 
 
-Underfull \hbox (badness 6268) in paragraph at lines 660--661
+Underfull \hbox (badness 2809) in paragraph at lines 670--671
 \OT1/cmr/m/n/10 [\OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 250\OML/cmm/m/it/10 ; \OMS
 /cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 150]$ \T1/ptm/m/n/10 and has the first way-poin
 t in
  []
 
-[6 <./fig/potentialfield_block.png>] (./paper.bbl
-Underfull \hbox (badness 1354) in paragraph at lines 27--32
-\T1/ptm/m/n/10 track-ing of a fully ac-tu-ated ship.  Mas-ter's
- []
-
-
+(./paper.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 27--32
 \T1/ptm/m/n/10 the-sis, Tech-nis-che Uni-ver-siteit Eind-hoven.
  []
 
 
-Overfull \hbox (8.71861pt too wide) in paragraph at lines 27--32
+Overfull \hbox (17.11217pt too wide) in paragraph at lines 27--32
 \T1/ptm/m/n/10 http://alexandria.tue.nl/repository/books/598447.pdf. 
  []
 
@@ -959,21 +944,21 @@ FiXme Summary: Number of notes: 0,
 (FiXme)        Number of fatal errors: 0,
 (FiXme)        Total: 0.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 683.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 691.
 [7 <./fig/lawn-bar-formation.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 683.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 691.
  (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 683.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 683.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 691.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 691.
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 79F135036EED399A4BFA93C1AE63DFA6;977.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 683.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 691.
  ) 
 Here is how much of TeX's memory you used:
- 10054 strings out of 493315
- 146218 string characters out of 6137904
- 368687 words of memory out of 5000000
- 13292 multiletter control sequences out of 15000+600000
+ 10055 strings out of 493315
+ 146243 string characters out of 6137904
+ 368786 words of memory out of 5000000
+ 13293 multiletter control sequences out of 15000+600000
  114093 words of font info for 122 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  35i,20n,60p,890b,586s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -994,7 +979,7 @@ nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
 urw/times/utmbi8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pf
 b></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (7 pages, 756121 bytes).
+Output written on paper.pdf (7 pages, 757731 bytes).
 PDF statistics:
  794 PDF objects out of 1000 (max. 8388607)
  588 compressed objects within 6 object streams

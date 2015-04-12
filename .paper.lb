@@ -15,7 +15,7 @@ aVfixme
 p7
 aVamsmath
 p8
-aVinputenc
+aVgraphicx
 p9
 aVlipsum
 p10
@@ -23,13 +23,13 @@ aVgeometry
 p11
 aValgorithm2e
 p12
-aVnatbib
+aVvarioref
 p13
 aVfontenc
 p14
-aVgraphicx
+aVinputenc
 p15
-aVvarioref
+aVnatbib
 p16
 atp17
 Rp18

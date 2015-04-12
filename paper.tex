@@ -22,14 +22,19 @@
 %\newacronym{GNC}{GNC}{Guidance, Navigation and Control}
 %\newacronym{LOS}{LOS}{Line-Of-Sight}
 \title{\vspace{-2cm}Formation Control of AAUSHIP}
-\author{Nick Østergaard \and Jeppe Dam \and Jesper A. Larsen}
+%\author{Nick Østergaard \and Jeppe Dam \and Jesper A. Larsen}
+\author{\IEEEauthorblockN{Nick Østergaard}
+\IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark} 
+\and
+\IEEEauthorblockN{Jeppe Dam}
+\IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark}
+\and
+\IEEEauthorblockN{Jesper A. Larsen}
+\IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark\\Email: jal@es.aau.dk}
+
+}
 \maketitle
 
-%\begin{center}
-%\vspace{-0.7cm}
-%Group 12gr730
-%\end{center}
-%\thispagestyle{empty}
 
 \begin{abstract}
 Many maritime mapping tasks are today carried out by large research ships, which are very costly to operate. As a way to overcome this, a number of small surveying vessels have been developed called AAUSHIP. In order to efficiently map the an area with such smaller vessels, it is important that several vessels are able to corporate on the task at hand. In this paper, the developed formation control strategy for the AAUSHIP series of vessels is presented, along with simulation results, which confirms, that the algorithm works as intended.
@@ -666,7 +671,6 @@ The formation have started at position $[-250,-150]$ and has the first waypoint 
 
 It can be seen that there is a little divergence of the ships to the line segments which is mainly due to the dynamics of the AAUSHIP. Their respective line segments are not shown on the figure, while this would make the figure confusing. Though the agents will follow a line segment from their position in the formation to the new position in the formation. This is due to the movement of the virtual leader where this only moves in straight lines, thus the following agents pursue to do the same. The trajectory the ships follow is plotted beneath the third vessel from the left from where it can be seen that this vessel is placed on top of the virtual leader, and almost makes this vessel serve as the leader of the formation. Due to the formation setup the following ships will follow the same trajectory as the leader but only in this case shifted in the easting position.
 
-\vspace{-2mm}
 \section{Discussion}
 
 The model and simulation has proved to work when implemented on the AAUSHIP which results in a vessel that tracks a predetermined trajectory. This makes the basis for the further work of expanding the fleet of AAUSHIPS and implement the investigated control strategies and ending up with a successful digital mapping of the seabed in the Limfjord.
@@ -682,7 +686,6 @@ The model and simulation has proved to work when implemented on the AAUSHIP whic
 %interest as the data have been taken by the Port of Aalborg. The
 %conclusion should by that time be that the fleet can do it as good as
 %the manual scanning performed by The Port of Aalborg.
-\vspace{-2mm}
 \bibliographystyle{apalike} 
 \bibliography{bib}
 \end{document}
