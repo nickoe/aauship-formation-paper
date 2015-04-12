@@ -481,8 +481,6 @@ of the new agent places it close to one of the single agents, these
 also might need to cluster. Thus the algorithm needs to run until no
 distances between agents are less than two times the radius.
 
-The algorithm generating this combined agent can be seen in pseudo
-code in algorithm \ref{al:clusteragents}.
 \begin{algorithm}[h]
   \KwData{clustering of agents}
   initialization\;
@@ -494,10 +492,12 @@ code in algorithm \ref{al:clusteragents}.
 	\caption{This pseudo code describes how agents that are too close to
 		each other are getting clustered and seen as one. The algorithm
 		can also be applied for obstacles in the potential
-		field.\vspace{3mm}}
+		field.}
   \label{al:clusteragents}
 \end{algorithm}
 
+The algorithm generating this combined agent can be seen in pseudo
+code in algorithm \ref{al:clusteragents}.
 The algorithm works by first checking every distance between the agents to see if it is lower
 than $2 \cdot r$. If the distance is lower, a new coordinate set needs
 to be calculated. The coordinates for the $\mathbf{p}_{j,new}$ is
@@ -636,7 +636,7 @@ reference position $\mathbf{p}_{i,r}$.
 	\caption{This pseudo code describes how the potential field is used
 	for each boat to calculate the reference for the inner controller
 	for every boat at every time step. Every iteration in the while loop
-	is a time step.\vspace{6pt}}
+	is a time step.}
 	\label{al:potfield}
 \end{algorithm}
 
@@ -661,6 +661,7 @@ The formation have started at position $[-250,-150]$ and has the first waypoint 
 
 It can be seen that there is a little divergence of the ships to the line segments which is mainly due to the dynamics of the AAUSHIP. Their respective line segments are not shown on the figure, while this would make the figure confusing. Though the agents will follow a line segment from their position in the formation to the new position in the formation. This is due to the movement of the virtual leader where this only moves in straight lines, thus the following agents pursue to do the same. The trajectory the ships follow is plotted beneath the third vessel from the left from where it can be seen that this vessel is placed on top of the virtual leader, and almost makes this vessel serve as the leader of the formation. Due to the formation setup the following ships will follow the same trajectory as the leader but only in this case shifted in the easting position.
 
+\vspace{-2mm}
 \section{Discussion}
 
 The model and simulation has proved to work when implemented on the AAUSHIP which results in a vessel that tracks a predetermined trajectory. This makes the basis for the further work of expanding the fleet of AAUSHIPS and implement the investigated control strategies and ending up with a successful digital mapping of the seabed in the Limfjord.
@@ -676,7 +677,7 @@ The model and simulation has proved to work when implemented on the AAUSHIP whic
 %interest as the data have been taken by the Port of Aalborg. The
 %conclusion should by that time be that the fleet can do it as good as
 %the manual scanning performed by The Port of Aalborg.
-
+\vspace{-2mm}
 \bibliographystyle{apalike} 
 \bibliography{bib}
 \end{document}
