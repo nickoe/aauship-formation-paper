@@ -34,7 +34,7 @@
 \begin{abstract}
 Many maritime mapping tasks are today carried out by large research ships, which are very costly to operate. As a way to overcome this, a number of small surveying vessels have been developed called AAUSHIP. In order to efficiently map the an area with such smaller vessels, it is important that several vessels are able to corporate on the task at hand. In this paper, the developed formation control strategy for the AAUSHIP series of vessels is presented, along with simulation results, which confirms, that the algorithm works as intended.
 \end{abstract}
-
+\vspace{-3mm}
 \section{Introduction}
 The background for the formation control subject of this project
 originate in a collaboration with Port of Aalborg, who has a vision to
@@ -323,7 +323,7 @@ specified trajectory. This will make the other agents follow this
 leader and keep their formation on the trajectory.
 
 \begin{figure}[htbp]
-  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf1}
+  \includegraphics[width=.9\linewidth]{fig/ftotmagnfigpdf1}
 	\caption{Plot of one agent's trajectory with a desired position with
 		obstacles to avoid}
   \label{fig:potfieldagenti}
@@ -352,7 +352,7 @@ The same algorithm is applied where agent $i$ avoids other agents,
 agent $j$, $j+1$. This can be seen on figure \ref{fig:avoidagent}.
 
 \begin{figure}[htbp]
-  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf}
+  \includegraphics[width=.9\linewidth]{fig/ftotmagnfigpdf}
 	\caption{Agent $i$ avoids agent $j$ and converges to the minima at
 		the virtual leader}
   \label{fig:avoidagent}
@@ -424,7 +424,7 @@ problem can be seen on figure \ref{fig:roevproblem}. The gains here
 are chosen exactly the same as in figure \ref{fig:potfieldagenti}.
 
 \begin{figure}[htbp]
-  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf3}
+  \includegraphics[width=.9\linewidth]{fig/ftotmagnfigpdf3}
 	\caption{An agent gets stuck due to a local minima between two other
 	agents. The agent cannot get out of this minima unless the other two
 	agents makes the space for the agent to pass through}
@@ -456,7 +456,7 @@ trajectory.  The solution of clustering the objects, that are too
 close, can be seen on figure \ref{fig:solroevproblem}.
 
 \begin{figure}[htbp]
-  \includegraphics[width=\colwidth]{fig/ftotmagnfigpdf4}
+  \includegraphics[width=.9\linewidth]{fig/ftotmagnfigpdf4}
 	\caption{An agent that before was stuck now does not get into a
 		local minima close to the agents, as it now sees the two other
 		agents as one larger agent.}
