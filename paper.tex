@@ -15,7 +15,7 @@
 %\usepackage{glossaries}
 %\setacronymstyle{long-sc-short}
 \geometry{left=3cm,right=3cm,bottom=4cm}
-\newcommand{\colwidth}{3in}
+%\newcommand{\colwidth}{3in}
 \begin{document}
 
 %\newacronym{FRP}{FRP}{Formation Reference Point}
@@ -24,10 +24,10 @@
 \title{\vspace{-2cm}Formation Control of AAUSHIP}
 %\author{Nick Østergaard \and Jeppe Dam \and Jesper A. Larsen}
 \author{\IEEEauthorblockN{Nick Østergaard}
-\IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark} 
+\IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark\\Email: nickoe@es.aau.dk} 
 \and
 \IEEEauthorblockN{Jeppe Dam}
-\IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark}
+\IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark\\Email: jeppedam@es.aau.dk}
 \and
 \IEEEauthorblockN{Jesper A. Larsen}
 \IEEEauthorblockA{Dep. of Electronic Systems\\Aalborg University\\Denmark\\Email: jal@es.aau.dk}
@@ -339,7 +339,7 @@ seen on figure \ref{fig:potfieldagenti}. The red line made of crosses
 is the trajectory that one single agent will follow, if the obstacles
 to avoid in the plot are static. In the plot every object, either
 another agent or an object, are kept static. So it shows how the
-trajectory will be in one single time step. This will change in the
+trajectory will be in one single time step. This will change dynamically in the
 next time step if the other agents also move in the potential field.
 The agent avoids obstacles on the way, where it can be seen that it
 does not get into the safety radius of the obstacles. In this specific
@@ -473,8 +473,8 @@ close to each other, have been clustered into one, seen from the
 $i$'th agent. Now the local minima between the agents have been
 neglected and the $i$'th agent can generate its trajectory around the
 agents and continue to the endpoint of the potential field. The
-algorithm checks if the distances between the agents are lower that $2
-\cdot r$. If this is the case it means that the $i$'th agent cannot
+algorithm checks if the distances between the agents are lower than two
+times the radius $r$. If this is the case it means that the $i$'th agent cannot
 generate a trajectory in between these agents, which can lead to a
 local minima. Therefore is the agents that are too close combined into
 one by generating the middle point between their positions and
@@ -529,7 +529,7 @@ as seen with the flow which is illustrated on the block diagram on
 figure~\vref{fig:potentialfield_block}.
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\colwidth]{fig/potentialfield_block}
+\includegraphics[width=\linewidth]{fig/potentialfield_block}
 \caption{Block diagram showing the iteration process of using the
 potential fields for computation of the input vector}
 \label{fig:potentialfield_block}
@@ -656,7 +656,7 @@ coordination task as defined by \citep{thorvaldsen}.
 A simulation of the algorithm with the dynamics of the AAUSHIP can be seen on figure \ref{fig:potform}.
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\colwidth]{fig/lawn-bar-formation}
+  \includegraphics[width=\linewidth]{fig/lawn-bar-formation}
   \caption{Four agents are placed relative to the middle point of the
 	formation, the virtual leader. This leader moves at the trajectory
 with the waypoints, but only changes to the next waypoint if the
