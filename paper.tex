@@ -673,17 +673,23 @@ The formation have started at position $[-250,-150]$ and has the first waypoint 
 
 It can be seen that there is a little divergence of the ships to the line segments which is mainly due to the dynamics of the AAUSHIP. Their respective line segments are not shown on the figure, while this would make the figure confusing. Though the agents will follow a line segment from their position in the formation to the new position in the formation. This is due to the movement of the virtual leader where this only moves in straight lines, thus the following agents pursue to do the same. The trajectory the ships follow is plotted beneath the third vessel from the left from where it can be seen that this vessel is placed on top of the virtual leader, and almost makes this vessel serve as the leader of the formation. Due to the formation setup the following ships will follow the same trajectory as the leader but only in this case shifted in the easting position.
 
-Running the same setup as used in figure~\vref{fig:potform}, but with the addition of some objects in the way of the paths it can be seen how the ships tries to evade the obstacles. The obstacles potential field is drawn as black circles. It shall be noted the plotted boundray is not a hard boundry, but only shows the radius whereby the potential field of the obstacles can affect other objects.
+Running the same setup as used in figure~\vref{fig:potform-po}, but with the addition of some objects in the way of the paths it can be seen how the ships tries to evade the obstacles. The obstacles potential field is drawn as black circles. It shall be noted the plotted boundary is not a hard boundary, but only shows the radius whereby the potential field of the obstacles can affect other objects.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\linewidth]{fig/lawn-bar-formation-po}
   \caption{Same setups as in figure~\vref{fig:potform}, but with obstables positioned on the pathways.}
   \label{fig:potform-po}
 \end{figure}
+On the figure~\vref{fig:potform-po}, there are places two obstacles near each other on the first north going leg of the path. Here it is seen that two ships tries to gently diverge from the paths following near the boundry to the object, while it is seen that there is a ship going ``through'' the two objects. Because the two objects are offset a bit and about the same distance from the path it is seen that the ship avoids the center of the obstacles as much as possible.
+\fixme{Dårlig formulering?}
 
 \section{Discussion}
 
 The model and simulation has proved to work when implemented on the AAUSHIP which results in a vessel that tracks a predetermined trajectory. This makes the basis for the further work of expanding the fleet of AAUSHIPS and implement the investigated control strategies and ending up with a successful digital mapping of the seabed in the Limfjord.
+
+There is good room to improve the way the obstacles are generated, because the current setup with using point sources might not be an ideal way to represent obstacles in many situations. For example in the case of a pier, it will take quite a lot of point objects to represent such that no ships will try to ``squeeze through'' the pier, while it is a solid in reality. 
+
+\fixme{Kan vi diskutere og reflektere mere?}
 
 %For now the first aim is reached with a model of the AAUSHIP that can
 %track the given trajectory, implementation of the whole ship is close
